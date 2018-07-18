@@ -1,0 +1,17 @@
+{
+  "name": "sealbottwo",
+  "version": "1.0.0",
+  "description": "Flexible Discord bot",
+  "main": "bot.js",
+  "scripts": {
+    "test": "npm start",
+    "start": "node ."
+  },
+  "author": "Luke Moll",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "discord.js": "^11.3.2",
+    "js-yaml": "^3.12.0",
+    "nedb": "^1.8.0"
+  }
+}

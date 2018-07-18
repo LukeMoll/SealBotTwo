@@ -1,0 +1,8 @@
+discord:
+    token: your token here
+
+commands:
+    - _ExampleCommand
+    - HelloWorld
+options:
+    prefix: '!'
