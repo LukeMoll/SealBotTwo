@@ -49,9 +49,10 @@ module.exports = {
 
             for (const lib of requireLib) {
                 try {
-                    libs[cmd] = require(`./lib/${cmd}.js`)
+                    libs[lib] = require(`./lib/${lib}.js`)
+                    console.log(`[commands]\tloaded lib.${lib} okay.`);
                 } catch (e) {
-                    console.error(`Could not import ./lib/${cmd}.js!`);
+                    console.error(`Could not import ./lib/${lib}.js!`);
                     process.exit(5);
                 }
             }
@@ -105,11 +106,17 @@ module.exports = {
 			this.stubRegex = new RegExp(`^${prefix}(?:${hooks.join("|")})`, 'i');
 		}
 
+        /**
+         * First test if this command should match. Override this if you need more advanced matching than stubRegex provides.
+         * (Alternatively, override stubRegex)
+         * @param {Message} message the message that (might) trigger this command
+         */
 		test(message) {
 			return this.stubRegex.test(message);
 		}
 
 		/**
+         * Called on every command until one returns true. You shouldn't need to override this.
 		 * @param {Message} message: the message that (might) trigger this command
 	     * @param {Discord.Client} client: the client that this bot is running on
 	     * @param {Object} obj: Various scope passed between commands. Includes obj.db for databases

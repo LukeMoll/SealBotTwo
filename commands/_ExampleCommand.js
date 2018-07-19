@@ -20,13 +20,13 @@ module.exports = class _ExampleCommand extends Command {
 		};
 
 		 // The names of other commands that this command depends upon
-	    this.requires = [],
+	    this.requires = [];
 		    
 	    // The names of libraries (found in lib/) that this command depends upon
-	    this.requiresLib = [],
+	    this.requiresLib = [];
 		
 	    // the names of databases (found in data/ and put under obj.db) that this command uses
-	    this.requiresDB = []
+	    this.requiresDB = [];
 
 	    // and you can have your own init code here too
 	    this.matchesRegex = new RegExp(`${this.stubRegex.source}( --optional)?(.+)`,'i');
@@ -38,8 +38,7 @@ module.exports = class _ExampleCommand extends Command {
      * @return {Boolean}: true if this message does match fully and exec() should be called, false otherwise
      */
     matches(message) {
-    	console.log("Matches()");
-    	return this.matchesRegex.test(message)
+    	return this.matchesRegex.test(message);
     }
 
 	/**
