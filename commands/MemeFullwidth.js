@@ -16,7 +16,7 @@ module.exports = class MemeFullwidth extends Command {
 			text: "Replies with your text in ｆｕｌｌｗｉｄｔｈ characters"
 		};
 
-		this.matchesRegex = new RegExp(`${this.stubRegex.source}\s+(.*)`, 'i');
+		this.matchesRegex = new RegExp(`${this.stubRegex.source}\\s+(.*)`, 'i');
 	}
 
 	matches(message) {

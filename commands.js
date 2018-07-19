@@ -31,20 +31,26 @@ module.exports = {
 
             for (const i in commands) {
                 commands[i].requires.forEach(r => requireCmd.add(r));
-                commands[i].requiresLib.forEach(r => requireLib.add(r));
-                commands[i].requiresDB.forEach(r => requireDB.add(r));
             }
-
-            requireCmd = [...requireCmd].filter(c => !importedCommands.hasOwnProperty(c));
+            
+            requireCmd = [...requireCmd].filter(c => !importedClasses.hasOwnProperty(c));
             let libs = {}, dbs = {};
-
+            
             for (const cmd of requireCmd) {
                 try {
-                    commands[cmd] = require(`./commands/${cmd}.js`)
+                    let rCmd = require(`./commands/${cmd}.js`)
+                    commands[cmd] = new rCmd(prefix);
+
+                    // TODO: add recursive requirement
                 } catch (e) {
-                    console.error(`Could not import ./commands/${cmd}.js!`);
+                    console.error(`Could not import ./commands/${cmd}.js!: ${e}`);
                     process.exit(5);
                 }
+            }
+            
+            for(const i in commands) {
+                commands[i].requiresLib.forEach(r => requireLib.add(r));
+                commands[i].requiresDB.forEach(r => requireDB.add(r));
             }
 
             for (const lib of requireLib) {
@@ -86,8 +92,15 @@ module.exports = {
 
     exec: (message, client) => {
        	for(const i in this.commands) {
-       		if(this.commands[i].run(message, client, this.obj)) {
-       			break;
+            // console.log(`[commands]\tTesting ${i}:`)
+            if(!this.commands[i].run) {
+                console.log(`[commands]\tFound command ${i} with no run() method`);
+                console.debug(this.commands[i]);
+                continue;
+            }
+            else if(this.commands[i].run(message, client, this.obj)) {
+                break;
+                // console.log(`[commands]\t Matched.`);
        		}
        	}
     },
