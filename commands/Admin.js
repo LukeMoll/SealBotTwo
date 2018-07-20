@@ -64,7 +64,7 @@ module.exports = class Admin extends Command {
                             .setColor("#ff0000")
                             .setTitle("An error occurred")
                             .setDescription("```" + err + "```");
-                        messsage.channel.send({embed});
+                        message.channel.send({embed});
                     })
                 }
                 else {

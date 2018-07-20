@@ -16,16 +16,16 @@ module.exports = class MinecraftQuery extends Command {
 			// What the command does
 			description: "Queries your configured Minecraft server",
 			// How users invoke it. Will be printed on a stub (but not full) match.
-			usage: `${prefix}mcquery [set address:port]`,
+			usage: `${prefix}mcquery [--raw|set address:port]`,
 			// in-depth explanation of the command and any options. Will be printed on !help <name>
-			text: `Gets the status of your Minecraft server. Use \`${prefix}mcquery set address:port\` to set which server is queried (\`:port\` should be the same port that you connect to, leave blank otherwise)`
+			text: `Gets the status of your Minecraft server. Use \`${prefix}mcquery set address:port\` to set which server is queried (\`:port\` should be the same port that you connect to, leave blank otherwise. Use --raw to get full JSON output)`
 		};
 
 	    this.requires = ["Admin"];
 	    this.requiresLib = ["admin"];
 	    this.requiresDB = ["guilds"];
 
-	    this.matchesRegex = new RegExp(`${this.stubRegex.source}\\s*(?:set ([^\\s:]+)(:\\d+)?)?$`,'i');
+	    this.matchesRegex = new RegExp(`${this.stubRegex.source}(?:\\s+(?:set ([^\\s:]+)(:\\d+)?)|\\s+(--raw))?$`,'i');
 	}
 
 	/**
@@ -107,10 +107,14 @@ module.exports = class MinecraftQuery extends Command {
 								  },
 								  {
 									"name": `Players (${state.raw.numplayers}/${state.raw.maxplayers})`,
-									"value": state.players.map(o => `• ${o.name}`).join("\n")
+									"value": state.raw.numplayers > 0?state.players.map(o => `• ${o.name}`).join("\n"):`😕`
 								  }
 								]
 							  }).setColor("#00FF88");
+							if(match[3]) {
+								// Raw mode
+								embed.addField("JSON", "```json\n" + JSON.stringify(state, null, 2) + "```");
+							}
 							message.channel.send({embed});
 						}).catch(error => {
 							const embed = new Discord.RichEmbed() // TODO: put this in some generic library
