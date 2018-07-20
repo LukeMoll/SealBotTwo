@@ -5,7 +5,10 @@
   "main": "bot.js",
   "scripts": {
     "test": "npm start",
-    "start": "node ."
+    "start": "node .",
+    "init-config": "npm run config-backup && cp config-example.yaml config.yaml && nano -ET4 config.yaml && echo \"To make more changes, edit config.yaml\"",
+    "config-backup": "cp config.yaml config.yaml.backup 2> /dev/null || :",
+    "add": "node add.js"
   },
   "author": "Luke Moll",
   "repository": {
