@@ -8,6 +8,10 @@
     "start": "node ."
   },
   "author": "Luke Moll",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LukeMoll/sealbottwo.git"
+  }
   "license": "BSD-3-Clause",
   "dependencies": {
     "discord.js": "^11.3.2",
