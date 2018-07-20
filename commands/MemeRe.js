@@ -33,7 +33,7 @@ module.exports = class MemeRe extends Command {
 		this.imgs = [];
 		weightedImgs.forEach((val) => {
 			for(var i=0; i<val.weight; i++) {
-			  allImgs.push(val)
+			  this.imgs.push(val)
 			}
 		});
 	}
@@ -48,7 +48,7 @@ module.exports = class MemeRe extends Command {
     	const embed = new Discord.RichEmbed()
 			.setColor(message.member.displayHexColor)
 			.setAuthor(message.member.displayName, message.author.displayAvatarURL)
-			.setImage(this.imgs[~~(Math.random() * allImgs.length)].url);
+			.setImage(this.imgs[~~(Math.random() * this.imgs.length)].url);
 
     	message.channel.send({embed});
 		if(message.deletable) {
