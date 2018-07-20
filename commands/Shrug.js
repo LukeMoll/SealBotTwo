@@ -1,5 +1,5 @@
 const Command = require('../commands.js').Command;
-
+const Discord = require('discord.js');
 module.exports = class Shrug extends Command {
 
 	/**
